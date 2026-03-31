@@ -14,10 +14,10 @@ pipeline {
     }
 
     stages { // the actual pipeline steps
-        when {
-            branch 'main'
-        }
         stage('Increment Version') {
+            when {
+                branch 'main'
+            }
             steps {
                 dir('app'){ // runs the command inside the app/ folder
                     sh 'npm version minor --no-git-tag-version' // npm version minor - bumps the middle number in package.json e.g. 1.0.0 → 1.1.0
