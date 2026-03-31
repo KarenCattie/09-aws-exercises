@@ -1,0 +1,7 @@
+services:
+  aws-node-app:
+    # Using ${IMAGE} as a variable lets Jenkins pass the full ECR image URI with tag at deploy time.
+    image: ${IMAGE}
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
