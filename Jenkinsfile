@@ -14,6 +14,9 @@ pipeline {
     }
 
     stages { // the actual pipeline steps
+        when {
+            branch 'main'
+        }
         stage('Increment Version') {
             steps {
                 dir('app'){ // runs the command inside the app/ folder
@@ -38,12 +41,18 @@ pipeline {
             }
         }
         stage('Build Docker Image') {
+            when {
+                branch 'main'
+            }
             steps {
                 echo 'building the docker image...'
                 sh "docker build -t ${IMAGE_NAME}:${IMAGE_VERSION} ." // Builds the Docker image using Dockerfile that is located in the project root
             }
         }
         stage('Push to ECR') {
+            when {
+                branch 'main'
+            }
             steps {
                 script {
                     // Login to ECR
@@ -55,6 +64,9 @@ pipeline {
             }
         }
         stage('Depoly to EC2'){
+            when {
+                branch 'main'
+            }
             steps {
                 script {
                     echo "deploying docker image to EC2..."
@@ -69,6 +81,9 @@ pipeline {
             }
         }
         stage('Commit to Git') {
+            when {
+                branch 'main'
+            }
             steps {
                 withCredentials([usernamePassword(
                     credentialsId: 'github-creds',
