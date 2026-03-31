@@ -61,7 +61,7 @@ pipeline {
 
                     def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME}:${IMAGE_VERSION}"
 
-                    sshagent(['ec2-server-key']) {
+                    sshagent(['ec2-web-server-key']) {
                         // Copy deploy script and docker-compose to EC2
                         sh "scp -o StrictHostKeyChecking=no server-cmds.sh ${EC2_INSTANCE}:/home/ec2-user"
                         sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ${EC2_INSTANCE}:/home/ec2-user"
